@@ -1,0 +1,11 @@
+{
+  "name": "%PROJECT_NAME%",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@authio/node": "^0.1.0-alpha.0",
+    "@authio/react": "^0.1.0-alpha.0",
+    "@authio/nextjs": "^0.1.0-alpha.0"
+  }
+}
