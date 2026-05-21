@@ -1,7 +1,7 @@
-import { mkdtempSync, readFileSync, rmSync, statSync } from "node:fs";
+import { mkdtempSync, readFileSync, rmSync, statSync, existsSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { run } from "../src/index";
 
 describe("create-authio-app", () => {
@@ -47,7 +47,6 @@ describe("create-authio-app", () => {
     const middleware = readFileSync(join(appDir, "middleware.ts"), "utf-8");
     expect(middleware).toContain("authMiddleware");
 
-    // _gitignore should be renamed to .gitignore
     expect(statSync(join(appDir, ".gitignore")).isFile()).toBe(true);
   });
 
@@ -80,6 +79,208 @@ describe("create-authio-app", () => {
     const server = readFileSync(join(dir, "server.ts"), "utf-8");
     expect(server).toContain("import { Hono }");
     expect(server).toContain("authio.sessions.verify");
+  });
+
+  it("scaffolds a SvelteKit app", async () => {
+    await run([
+      "demo-sveltekit",
+      "--framework",
+      "sveltekit",
+      "--publishable-key",
+      "pk_test_svelte",
+      "--yes",
+    ]);
+    const dir = join(workdir, "demo-sveltekit");
+    expect(statSync(dir).isDirectory()).toBe(true);
+
+    const env = readFileSync(join(dir, ".env.example"), "utf-8");
+    expect(env).toContain("PUBLIC_AUTHIO_PUBLISHABLE_KEY=pk_test_svelte");
+    expect(env).not.toContain("%AUTHIO_PUBLISHABLE_KEY%");
+
+    const pkg = JSON.parse(readFileSync(join(dir, "package.json"), "utf-8"));
+    expect(pkg.name).toBe("demo-sveltekit");
+    expect(pkg.dependencies["@authio/svelte"]).toBeDefined();
+    expect(pkg.dependencies["@authio/node"]).toBeDefined();
+    expect(pkg.devDependencies["@sveltejs/kit"]).toBeDefined();
+
+    const hooks = readFileSync(join(dir, "src", "hooks.server.ts"), "utf-8");
+    expect(hooks).toContain("verifySessionCookie");
+    expect(hooks).toContain("authio_session");
+
+    const callback = readFileSync(
+      join(dir, "src", "routes", "api", "auth", "callback", "+server.ts"),
+      "utf-8",
+    );
+    expect(callback).toContain("access_token");
+    expect(callback).toContain("cookies.set");
+
+    const dashboard = readFileSync(
+      join(dir, "src", "routes", "dashboard", "+page.server.ts"),
+      "utf-8",
+    );
+    expect(dashboard).toContain("locals.session");
+
+    expect(statSync(join(dir, ".gitignore")).isFile()).toBe(true);
+  });
+
+  it("scaffolds a Remix app", async () => {
+    await run([
+      "demo-remix",
+      "--framework",
+      "remix",
+      "--publishable-key",
+      "pk_test_remix",
+      "--yes",
+    ]);
+    const dir = join(workdir, "demo-remix");
+    expect(statSync(dir).isDirectory()).toBe(true);
+
+    const env = readFileSync(join(dir, ".env.example"), "utf-8");
+    expect(env).toContain("AUTHIO_PUBLISHABLE_KEY=pk_test_remix");
+
+    const pkg = JSON.parse(readFileSync(join(dir, "package.json"), "utf-8"));
+    expect(pkg.dependencies["@remix-run/node"]).toBeDefined();
+    expect(pkg.dependencies["@authio/node"]).toBeDefined();
+    expect(pkg.dependencies["@authio/react"]).toBeDefined();
+
+    const auth = readFileSync(
+      join(dir, "app", "lib", "auth.server.ts"),
+      "utf-8",
+    );
+    expect(auth).toContain("createCookieSessionStorage");
+    expect(auth).toContain("JwtVerifier");
+
+    const dashboard = readFileSync(
+      join(dir, "app", "routes", "dashboard.tsx"),
+      "utf-8",
+    );
+    expect(dashboard).toContain("requireSession");
+
+    const callback = readFileSync(
+      join(dir, "app", "routes", "auth.callback.tsx"),
+      "utf-8",
+    );
+    expect(callback).toContain("access_token");
+
+    expect(statSync(join(dir, ".gitignore")).isFile()).toBe(true);
+  });
+
+  it("scaffolds a Laravel app", async () => {
+    await run([
+      "demo-laravel",
+      "--framework",
+      "laravel",
+      "--publishable-key",
+      "pk_test_laravel",
+      "--yes",
+      "--skip-prechecks",
+    ]);
+    const dir = join(workdir, "demo-laravel");
+    expect(statSync(dir).isDirectory()).toBe(true);
+
+    const composer = JSON.parse(
+      readFileSync(join(dir, "composer.json"), "utf-8"),
+    );
+    expect(composer.name).toBe("authio/demo-laravel");
+    expect(composer.require["authio/authio"]).toBeDefined();
+    expect(composer.require["laravel/framework"]).toBeDefined();
+
+    const env = readFileSync(join(dir, ".env.example"), "utf-8");
+    expect(env).toContain("APP_NAME=demo-laravel");
+    expect(env).toContain("AUTHIO_PUBLISHABLE_KEY=pk_test_laravel");
+
+    const middleware = readFileSync(
+      join(dir, "app", "Http", "Middleware", "AuthenticateWithAuthio.php"),
+      "utf-8",
+    );
+    expect(middleware).toContain("$this->authio->verifyToken");
+
+    const routes = readFileSync(join(dir, "routes", "web.php"), "utf-8");
+    expect(routes).toContain("/dashboard");
+    expect(routes).toContain("auth/sign-in");
+    expect(routes).toContain("auth/callback");
+
+    const signIn = readFileSync(
+      join(dir, "resources", "views", "auth", "sign-in.blade.php"),
+      "utf-8",
+    );
+    expect(signIn).toContain("magic-link/start");
+
+    expect(statSync(join(dir, ".gitignore")).isFile()).toBe(true);
+  });
+
+  it("scaffolds a Rails app", async () => {
+    await run([
+      "demo-rails",
+      "--framework",
+      "rails",
+      "--publishable-key",
+      "pk_test_rails",
+      "--yes",
+      "--skip-prechecks",
+    ]);
+    const dir = join(workdir, "demo-rails");
+    expect(statSync(dir).isDirectory()).toBe(true);
+
+    const gemfile = readFileSync(join(dir, "Gemfile"), "utf-8");
+    expect(gemfile).toContain('gem "rails"');
+    expect(gemfile).toContain('gem "authio"');
+
+    const env = readFileSync(join(dir, ".env.example"), "utf-8");
+    expect(env).toContain("AUTHIO_PUBLISHABLE_KEY=pk_test_rails");
+
+    const concern = readFileSync(
+      join(
+        dir,
+        "app",
+        "controllers",
+        "concerns",
+        "authio_authentication.rb",
+      ),
+      "utf-8",
+    );
+    expect(concern).toContain("authenticate_authio!");
+    expect(concern).toContain("Authio::Client.default.verify_token");
+
+    const routes = readFileSync(join(dir, "config", "routes.rb"), "utf-8");
+    expect(routes).toContain("/auth/sign-in");
+    expect(routes).toContain("/auth/callback");
+    expect(routes).toContain("/dashboard");
+
+    const sessions = readFileSync(
+      join(dir, "app", "controllers", "sessions_controller.rb"),
+      "utf-8",
+    );
+    expect(sessions).toContain("access_token");
+    expect(sessions).toContain("cookies[:authio_session]");
+
+    expect(statSync(join(dir, ".gitignore")).isFile()).toBe(true);
+  });
+
+  it("accepts --framework=name (equals form)", async () => {
+    await run([
+      "demo-eq",
+      "--framework=sveltekit",
+      "--publishable-key=pk_test_eq",
+      "--yes",
+    ]);
+    const dir = join(workdir, "demo-eq");
+    expect(existsSync(join(dir, "svelte.config.js"))).toBe(true);
+  });
+
+  it("rejects an unknown framework", async () => {
+    const exit = vi.spyOn(process, "exit").mockImplementation(((code?: number) => {
+      throw new Error(`exit:${code}`);
+    }) as never);
+    await expect(
+      run([
+        "demo-bad",
+        "--framework",
+        "nonexistent",
+        "--yes",
+      ]),
+    ).rejects.toThrow(/exit:1/);
+    exit.mockRestore();
   });
 
   it("scaffolds a skip target", async () => {

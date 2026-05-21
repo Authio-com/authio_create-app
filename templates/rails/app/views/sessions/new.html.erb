@@ -1,0 +1,57 @@
+<h1>Sign in</h1>
+<p>Enter your email to receive a magic link.</p>
+
+<form id="signin-form" style="display: grid; gap: 12px; max-width: 360px;">
+  <label for="email">Email</label>
+  <input
+    id="email"
+    type="email"
+    name="email"
+    required
+    autocomplete="email"
+    placeholder="you@example.com"
+  >
+  <button type="submit" id="submit-btn">Send magic link</button>
+</form>
+<p id="status" style="margin-top: 16px;"></p>
+
+<script>
+  (() => {
+    const API_URL = <%= raw @api_url.to_json %>;
+    const PUB_KEY = <%= raw @publishable_key.to_json %>;
+    const REDIRECT = <%= raw @redirect_url.to_json %>;
+    const origin = window.location.origin;
+
+    document.getElementById('signin-form').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const btn = document.getElementById('submit-btn');
+      const status = document.getElementById('status');
+      if (!email) return;
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+      status.textContent = '';
+      const callback = `${origin}/auth/callback?redirect=${encodeURIComponent(REDIRECT)}`;
+      try {
+        const res = await fetch(`${API_URL}/v1/auth/magic-link/start`, {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+            'x-publishable-key': PUB_KEY,
+          },
+          body: JSON.stringify({ email, redirect_url: callback }),
+        });
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          throw new Error(err.message || `auth-core returned ${res.status}`);
+        }
+        status.textContent = 'Check your email for the sign-in link.';
+      } catch (err) {
+        status.textContent = err.message || 'sign-in failed';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Send magic link';
+      }
+    });
+  })();
+</script>

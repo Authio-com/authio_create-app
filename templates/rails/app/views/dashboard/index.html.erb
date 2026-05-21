@@ -1,0 +1,16 @@
+<h1>Dashboard</h1>
+<p>Signed in as <code><%= @session.user_id %></code></p>
+<p>
+  Active organization:
+  <code><%= @session.org_id || '(none selected — multi-org user)' %></code>
+</p>
+<% if @session.role %>
+  <p>Role: <code><%= @session.role %></code></p>
+<% end %>
+
+<%= button_to "Sign out", sign_out_path, method: :delete, form: { style: "margin-top: 24px;" } %>
+
+<p style="margin-top: 24px; color: #6b7280; font-size: 14px;">
+  This page calls <code>authenticate_authio!</code>, which verifies the Authio
+  session JWT against the cached JWKS via the <code>authio</code> gem.
+</p>

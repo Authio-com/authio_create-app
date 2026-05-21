@@ -1,0 +1,22 @@
+<h1>Welcome to %PROJECT_NAME%</h1>
+<p>This Rails starter is wired to Authio.</p>
+
+<% if @session %>
+  <p>
+    Signed in as <code><%= @session.user_id %></code> ·
+    <%= link_to "Dashboard", dashboard_path %> ·
+    <%= button_to "Sign out", sign_out_path, method: :delete, form: { style: "display:inline" } %>
+  </p>
+<% else %>
+  <ul>
+    <li><%= link_to "Sign in", sign_in_path %></li>
+    <li><%= link_to "Dashboard", dashboard_path %> (protected)</li>
+    <li><%= link_to "/api/me", api_me_path %> (JSON loader)</li>
+  </ul>
+<% end %>
+
+<p style="color: #6b7280; font-size: 14px; margin-top: 2rem;">
+  Edit <code>app/views/home/index.html.erb</code> to make this your own.
+  Controllers call <code>authenticate_authio!</code> to verify the session JWT
+  against the cached JWKS via the <code>authio</code> gem.
+</p>
