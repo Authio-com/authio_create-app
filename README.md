@@ -1,3 +1,10 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset=".github/logo-dark.png">
+    <img alt="Authio" src=".github/logo-light.png" width="220">
+  </picture>
+</p>
+
 # create-authio-app
 
 Scaffold a working app pre-wired to Authio (passkey, magic link, multi-org).
