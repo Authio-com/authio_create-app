@@ -20,7 +20,8 @@ Then open:
 
 ## What this scaffold does
 
-- `middleware.ts`: `authMiddleware` from `@authio/nextjs` verifies the `authio_session` cookie's JWT against the cached JWKS at the Edge runtime. No round-trip to auth-core on the hot path.
+- `middleware.ts`: `createAuthioMiddleware()` from `@authio/nextjs` gates your auth-protected routes AND handles silent refresh — when the 15-minute access JWT ages out, the middleware quietly routes the user through `/api/auth/refresh` and back, so they stay signed in for the full org-policy refresh window (default 30 days) without ever seeing the sign-in page.
+- `app/api/auth/callback/route.ts`, `refresh/route.ts`, `sign-out/route.ts`: the BFF half of the auth lifecycle. Three drop-in handlers from `@authio/nextjs/server`. You should not need to touch them.
 - `app/layout.tsx`: wraps the tree in `AuthioProvider`, which gives every component access to `useUser`, `useOrganizations`, `useActiveOrganization`, `useSwitchOrganization`.
 - `app/sign-in/page.tsx`: renders `<SignIn />` — passkey + magic link + OAuth, all in one component.
 - `app/dashboard/page.tsx`: Server Component, calls `auth()` server-side. `userId` is always set; `orgId` may be null when the user belongs to multiple organizations and hasn't yet selected one.

@@ -45,7 +45,28 @@ describe("create-authio-app", () => {
     expect(layout).toContain("demo-app");
 
     const middleware = readFileSync(join(appDir, "middleware.ts"), "utf-8");
-    expect(middleware).toContain("authMiddleware");
+    expect(middleware).toContain("createAuthioMiddleware");
+
+    // 0.2 scaffold ships the three auth route handlers so the full
+    // session lifecycle (sign-in + silent refresh + sign-out) works
+    // out of the box.
+    const callbackRoute = readFileSync(
+      join(appDir, "app", "api", "auth", "callback", "route.ts"),
+      "utf-8",
+    );
+    expect(callbackRoute).toContain("createAuthioCallbackHandler");
+
+    const refreshRoute = readFileSync(
+      join(appDir, "app", "api", "auth", "refresh", "route.ts"),
+      "utf-8",
+    );
+    expect(refreshRoute).toContain("createAuthioRefreshHandler");
+
+    const signOutRoute = readFileSync(
+      join(appDir, "app", "api", "auth", "sign-out", "route.ts"),
+      "utf-8",
+    );
+    expect(signOutRoute).toContain("createAuthioSignOutHandler");
 
     expect(statSync(join(appDir, ".gitignore")).isFile()).toBe(true);
   });

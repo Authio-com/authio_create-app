@@ -8,7 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
-    "@authio/nextjs": "^0.1.0-alpha.0",
+    "@authio/nextjs": "^0.2.0",
     "@authio/react": "^0.1.0-alpha.0",
     "@authio/node": "^0.1.0-alpha.0",
     "next": "^15.0.3",
