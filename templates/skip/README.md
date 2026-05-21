@@ -17,4 +17,4 @@ Then build whatever you want — the SDKs are ready:
 
 ## Docs
 
-https://authiodocs-production.up.railway.app
+https://docs.authio.com

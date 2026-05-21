@@ -170,8 +170,8 @@ export async function run(argv: string[]): Promise<void> {
     "%PROJECT_NAME%": projectName,
     "%PROJECT_ID%": args.projectId ?? "",
     "%AUTHIO_PUBLISHABLE_KEY%": publishableKey,
-    "%AUTHIO_API_URL%": "https://authioauth-core-production.up.railway.app",
-    "%AUTHIO_MGMT_API_URL%": "https://authiomanagement-api-production.up.railway.app",
+    "%AUTHIO_API_URL%": "https://auth-api.authio.com",
+    "%AUTHIO_MGMT_API_URL%": "https://api.authio.com",
   });
 
   console.log();
@@ -188,11 +188,11 @@ export async function run(argv: string[]): Promise<void> {
       `    ${kleur.yellow("→")} Replace ${kleur.bold("AUTHIO_PUBLISHABLE_KEY")} in .env / .env.local`,
     );
     console.log(
-      `    ${kleur.yellow("→")} Mint one via the dashboard at ${kleur.cyan("https://authiodashboard-production.up.railway.app/keys/new")}`,
+      `    ${kleur.yellow("→")} Mint one via the dashboard at ${kleur.cyan("https://dashboard.authio.com/keys/new")}`,
     );
   }
   console.log();
-  console.log(`    ${kleur.dim("Docs:")} ${kleur.cyan("https://authiodocs-production.up.railway.app")}`);
+  console.log(`    ${kleur.dim("Docs:")} ${kleur.cyan("https://docs.authio.com")}`);
   console.log();
 }
 

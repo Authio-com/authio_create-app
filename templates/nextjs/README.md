@@ -30,4 +30,4 @@ Then open:
 
 - Add an `<OrganizationSwitcher />` (from `@authio/react`) in your top nav.
 - Deploy to Vercel / Railway / your favorite host. Set the env vars there.
-- Read the docs: https://authiodocs-production.up.railway.app
+- Read the docs: https://docs.authio.com

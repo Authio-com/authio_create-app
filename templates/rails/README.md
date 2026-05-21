@@ -49,4 +49,4 @@ Then open:
 
 ## Docs
 
-https://authiodocs-production.up.railway.app
+https://docs.authio.com

@@ -32,7 +32,7 @@ npx create-authio-app my-app --framework nextjs --publishable-key pk_live_... --
 
 ## Docs
 
-https://authiodocs-production.up.railway.app
+https://docs.authio.com
 
 ## License
 

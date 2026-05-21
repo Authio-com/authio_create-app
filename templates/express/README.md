@@ -21,4 +21,4 @@ curl http://localhost:4000/me \\
 
 ## Docs
 
-https://authiodocs-production.up.railway.app
+https://docs.authio.com

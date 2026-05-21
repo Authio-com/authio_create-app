@@ -12,4 +12,4 @@ pnpm dev
 
 ## Docs
 
-https://authiodocs-production.up.railway.app
+https://docs.authio.com
