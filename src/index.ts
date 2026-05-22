@@ -8,6 +8,8 @@ import kleur from "kleur";
 
 type Framework =
   | "nextjs"
+  | "react-vite"
+  | "vue-vite"
   | "express"
   | "hono"
   | "sveltekit"
@@ -18,6 +20,8 @@ type Framework =
 
 const FRAMEWORKS: { id: Framework; label: string; hint: string }[] = [
   { id: "nextjs", label: "Next.js 15 (App Router)", hint: "Recommended" },
+  { id: "react-vite", label: "React + Vite (SPA)", hint: "Pure client-side, @authio/react" },
+  { id: "vue-vite", label: "Vue 3 + Vite (SPA)", hint: "Pure client-side, @authio/vue" },
   { id: "sveltekit", label: "SvelteKit", hint: "Svelte 5 + Vite" },
   { id: "remix", label: "Remix", hint: "React + loaders/actions" },
   { id: "express", label: "Express", hint: "Classic Node API" },
@@ -159,6 +163,31 @@ export async function run(argv: string[]): Promise<void> {
     publishableKey = "pk_test_PLACEHOLDER";
   }
 
+  // SPA-shaped templates (react-vite / vue-vite) need a project ID rather
+  // than a publishable key — they hit auth-core directly via CORS and
+  // identify themselves through the X-Authio-Project header. If the user
+  // didn't pass --project-id, prompt for one inline.
+  let projectId = args.projectId;
+  if (
+    (framework === "react-vite" || framework === "vue-vite") &&
+    !projectId &&
+    !args.yes
+  ) {
+    const r = await prompts({
+      type: "text",
+      name: "id",
+      message: "Authio project ID (proj_…)",
+      initial: "proj_REPLACE_ME",
+      hint: "Press Enter to use a placeholder; replace later in .env.local",
+    });
+    projectId = (r.id as string | undefined) ?? "proj_REPLACE_ME";
+  } else if (
+    (framework === "react-vite" || framework === "vue-vite") &&
+    !projectId
+  ) {
+    projectId = "proj_REPLACE_ME";
+  }
+
   console.log();
   console.log(kleur.dim(`  Scaffolding ${kleur.bold(framework)} app at ${kleur.bold(projectName)}...`));
 
@@ -168,7 +197,7 @@ export async function run(argv: string[]): Promise<void> {
 
   await copyTemplate(templateRoot, targetDir, {
     "%PROJECT_NAME%": projectName,
-    "%PROJECT_ID%": args.projectId ?? "",
+    "%PROJECT_ID%": projectId ?? args.projectId ?? "",
     "%AUTHIO_PUBLISHABLE_KEY%": publishableKey,
     "%AUTHIO_API_URL%": "https://auth-api.authio.com",
     "%AUTHIO_MGMT_API_URL%": "https://api.authio.com",
@@ -199,6 +228,8 @@ export async function run(argv: string[]): Promise<void> {
 function printNextSteps(framework: Framework): void {
   switch (framework) {
     case "nextjs":
+    case "react-vite":
+    case "vue-vite":
     case "remix":
     case "sveltekit":
     case "express":
@@ -224,6 +255,8 @@ function printNextSteps(framework: Framework): void {
 function checkPrerequisites(framework: Framework): string | null {
   switch (framework) {
     case "nextjs":
+    case "react-vite":
+    case "vue-vite":
     case "express":
     case "hono":
     case "sveltekit":

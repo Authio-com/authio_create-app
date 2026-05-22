@@ -22,6 +22,8 @@ You'll be asked for a project name, framework, and Authio publishable key. The s
 | Choice | What you get |
 |---|---|
 | **Next.js 15 (App Router)** | `middleware.ts` for edge JWT verification, `<SignIn />` page, protected `/dashboard` Server Component, `/api/me` Route Handler |
+| **React + Vite (SPA)** | Pure client-side React 18 + Vite + react-router. `<AuthioProvider>`, `<SignedIn>`/`<SignedOut>` gates, magic-link + passkey sign-in form, protected `/dashboard` via `useAuthioRequired`. Talks directly to auth-core via CORS. |
+| **Vue 3 + Vite (SPA)** | Pure client-side Vue 3 + Vite + vue-router. `createAuthio` plugin, `<SignedIn>`/`<SignedOut>` slot gates, magic-link + passkey sign-in form, protected `/dashboard` via `createAuthioRouterGuard`. Talks directly to auth-core via CORS. |
 | **SvelteKit** | `hooks.server.ts` JWT verification, magic-link sign-in, protected `/dashboard`, `/api/me`, Svelte store for session |
 | **Remix** | Cookie session storage via `createCookieSessionStorage`, `requireSession()` loader guard, callback route, JSON API |
 | **Express** | Bearer-token-verifying middleware on `/me` and `/me/memberships` |
