@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { signInWithMagicLink, signInWithPasskey } from "@authio.com/vue";
+import { signInWithMagicLink, signInWithPasskey } from "@useauthio/vue";
 
 const apiUrl =
   import.meta.env.VITE_AUTHIO_API_URL ?? "https://auth-api.authio.com";

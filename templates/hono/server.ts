@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { serve } from "@hono/node-server";
-import { Authio, AuthioError } from "@authio.com/node";
+import { Authio, AuthioError } from "@useauthio/node";
 
 const authio = new Authio({
   apiKey: process.env.AUTHIO_SECRET_KEY!,

@@ -1,4 +1,4 @@
-import { createAuthioMiddleware } from "@authio.com/nextjs";
+import { createAuthioMiddleware } from "@useauthio/nextjs";
 
 // Drop-in Authio middleware. Handles the silent-refresh flow so users
 // stay signed in for the full org-policy refresh window even though

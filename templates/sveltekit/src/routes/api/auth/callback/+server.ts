@@ -1,5 +1,5 @@
 import { redirect, type RequestHandler } from "@sveltejs/kit";
-import { verifySessionCookie } from "@authio.com/svelte/server";
+import { verifySessionCookie } from "@useauthio/svelte/server";
 import { env as publicEnv } from "$env/dynamic/public";
 
 const COOKIE_NAME = "authio_session";

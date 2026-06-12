@@ -1,4 +1,4 @@
-import { createAuthioSignOutHandler } from "@authio.com/nextjs/server";
+import { createAuthioSignOutHandler } from "@useauthio/nextjs/server";
 
 // Clears both Authio cookies and (best-effort) revokes the underlying
 // session row against auth-core. Accepts GET so the sidebar sign-out

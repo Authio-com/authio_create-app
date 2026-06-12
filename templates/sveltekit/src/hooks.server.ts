@@ -1,6 +1,6 @@
 import type { Handle } from "@sveltejs/kit";
 import { redirect } from "@sveltejs/kit";
-import { verifySessionCookie } from "@authio.com/svelte/server";
+import { verifySessionCookie } from "@useauthio/svelte/server";
 import { env as publicEnv } from "$env/dynamic/public";
 
 const PROTECTED_PREFIXES = ["/dashboard", "/api/me"];

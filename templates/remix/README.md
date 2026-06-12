@@ -2,7 +2,7 @@
 
 Remix + Authio starter. Loaders gate auth (`requireSession`); session JWT is
 stored in a Remix `createCookieSessionStorage` HTTP-only cookie and verified
-against the Authio JWKS via `@authio.com/node`.
+against the Authio JWKS via `@useauthio/node`.
 
 ## Run
 
@@ -24,7 +24,7 @@ Then open:
 ## What this scaffold does
 
 - `app/lib/auth.server.ts` — wraps Remix's cookie session storage. Stores the
-  raw Authio access token under `token`, verifies it via `@authio.com/node`'s
+  raw Authio access token under `token`, verifies it via `@useauthio/node`'s
   `JwtVerifier`, and exposes `getSession()` / `requireSession()` helpers.
 - `app/routes/sign-in.tsx` — calls `auth.authio.com`'s
   `/v1/auth/magic-link/start` from the browser using the publishable key.

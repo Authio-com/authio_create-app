@@ -11,8 +11,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@authio.com/node": "^0.1.0-alpha.0",
-    "@authio.com/react": "^0.1.0-alpha.0",
+    "@useauthio/node": "^0.1.0-alpha.0",
+    "@useauthio/react": "^0.1.0-alpha.0",
     "@remix-run/node": "^2.13.1",
     "@remix-run/react": "^2.13.1",
     "@remix-run/serve": "^2.13.1",

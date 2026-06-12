@@ -1,4 +1,4 @@
-import { SignIn } from "@authio.com/react";
+import { SignIn } from "@useauthio/react";
 
 export default function SignInPage() {
   return (

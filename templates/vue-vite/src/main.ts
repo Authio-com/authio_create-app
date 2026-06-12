@@ -1,5 +1,5 @@
 import { createApp } from "vue";
-import { createAuthio, createAuthioRouterGuard } from "@authio.com/vue";
+import { createAuthio, createAuthioRouterGuard } from "@useauthio/vue";
 import { createRouter, createWebHistory } from "vue-router";
 import App from "./App.vue";
 import Home from "./views/Home.vue";

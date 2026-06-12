@@ -37,7 +37,7 @@ describe("create-authio-app", () => {
 
     const pkg = JSON.parse(readFileSync(join(appDir, "package.json"), "utf-8"));
     expect(pkg.name).toBe("demo-app");
-    expect(pkg.dependencies["@authio.com/nextjs"]).toBeDefined();
+    expect(pkg.dependencies["@useauthio/nextjs"]).toBeDefined();
     expect(pkg.dependencies.next).toBeDefined();
 
     const layout = readFileSync(join(appDir, "app", "layout.tsx"), "utf-8");
@@ -120,8 +120,8 @@ describe("create-authio-app", () => {
 
     const pkg = JSON.parse(readFileSync(join(dir, "package.json"), "utf-8"));
     expect(pkg.name).toBe("demo-sveltekit");
-    expect(pkg.dependencies["@authio.com/svelte"]).toBeDefined();
-    expect(pkg.dependencies["@authio.com/node"]).toBeDefined();
+    expect(pkg.dependencies["@useauthio/svelte"]).toBeDefined();
+    expect(pkg.dependencies["@useauthio/node"]).toBeDefined();
     expect(pkg.devDependencies["@sveltejs/kit"]).toBeDefined();
 
     const hooks = readFileSync(join(dir, "src", "hooks.server.ts"), "utf-8");
@@ -161,8 +161,8 @@ describe("create-authio-app", () => {
 
     const pkg = JSON.parse(readFileSync(join(dir, "package.json"), "utf-8"));
     expect(pkg.dependencies["@remix-run/node"]).toBeDefined();
-    expect(pkg.dependencies["@authio.com/node"]).toBeDefined();
-    expect(pkg.dependencies["@authio.com/react"]).toBeDefined();
+    expect(pkg.dependencies["@useauthio/node"]).toBeDefined();
+    expect(pkg.dependencies["@useauthio/react"]).toBeDefined();
 
     const auth = readFileSync(
       join(dir, "app", "lib", "auth.server.ts"),
@@ -315,7 +315,7 @@ describe("create-authio-app", () => {
     ]);
     const dir = join(workdir, "demo-skip");
     const pkg = JSON.parse(readFileSync(join(dir, "package.json"), "utf-8"));
-    expect(pkg.dependencies["@authio.com/node"]).toBeDefined();
-    expect(pkg.dependencies["@authio.com/react"]).toBeDefined();
+    expect(pkg.dependencies["@useauthio/node"]).toBeDefined();
+    expect(pkg.dependencies["@useauthio/react"]).toBeDefined();
   });
 });

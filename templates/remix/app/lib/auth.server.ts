@@ -1,5 +1,5 @@
 import { createCookieSessionStorage, redirect } from "@remix-run/node";
-import { JwtVerifier, type Session } from "@authio.com/node";
+import { JwtVerifier, type Session } from "@useauthio/node";
 
 const apiUrl = process.env.AUTHIO_API_URL ?? "https://api.authio.com";
 const sessionSecret = process.env.SESSION_SECRET ?? "dev-only-session-secret-please-rotate";

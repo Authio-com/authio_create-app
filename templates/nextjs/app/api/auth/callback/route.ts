@@ -1,4 +1,4 @@
-import { createAuthioCallbackHandler } from "@authio.com/nextjs/server";
+import { createAuthioCallbackHandler } from "@useauthio/nextjs/server";
 
 // Receives ?access_token=…&refresh_token=… from the Authio hosted
 // sign-in flow, persists them as cookies, and redirects to /dashboard.

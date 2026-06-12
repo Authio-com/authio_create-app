@@ -1,5 +1,5 @@
 import { redirect, type LoaderFunctionArgs } from "@remix-run/node";
-import { JwtVerifier } from "@authio.com/node";
+import { JwtVerifier } from "@useauthio/node";
 import { commitToken } from "~/lib/auth.server";
 
 export async function loader({ request }: LoaderFunctionArgs) {

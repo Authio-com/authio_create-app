@@ -11,7 +11,7 @@ cp .env.example .env.local
 pnpm dev
 ```
 
-Open http://localhost:5173/ — the app uses `<AuthioProvider>` from `@authio.com/react`, with `<SignedIn>` / `<SignedOut>` gates and a magic-link + passkey sign-in form.
+Open http://localhost:5173/ — the app uses `<AuthioProvider>` from `@useauthio/react`, with `<SignedIn>` / `<SignedOut>` gates and a magic-link + passkey sign-in form.
 
 ## What this scaffold does
 
@@ -28,9 +28,9 @@ Open http://localhost:5173/ — the app uses `<AuthioProvider>` from `@authio.co
 
 Auth-core enforces a per-project CORS allowlist. Make sure your SPA's origin is on the allowlist — see https://docs.authio.com/operations/setup-custom-domain.
 
-## When to use this vs `@authio.com/nextjs`
+## When to use this vs `@useauthio/nextjs`
 
-| Use this (`@authio.com/react`) when... | Use `@authio.com/nextjs` when... |
+| Use this (`@useauthio/react`) when... | Use `@useauthio/nextjs` when... |
 |---|---|
 | You have a pure SPA hitting auth-core via CORS | You have a Next.js BFF (RSC, middleware) |
 | You can't run server-side cookies | You want HttpOnly cookies + RSC `auth()` helper |
