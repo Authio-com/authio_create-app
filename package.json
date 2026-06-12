@@ -47,5 +47,10 @@
     "webauthn",
     "scaffold",
     "starter"
-  ]
+  ],
+  "pnpm": {
+    "overrides": {
+      "esbuild": ">=0.28.1"
+    }
+  }
 }
