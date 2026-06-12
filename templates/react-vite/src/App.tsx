@@ -7,7 +7,7 @@ import {
   SignedOut,
   signInWithMagicLink,
   signInWithPasskey,
-} from "@authio/react";
+} from "@authio.com/react";
 
 const apiUrl =
   import.meta.env.VITE_AUTHIO_API_URL ?? "https://auth-api.authio.com";

@@ -1,5 +1,5 @@
 import { writable, type Writable } from "svelte/store";
-import type { Session } from "@authio/node";
+import type { Session } from "@authio.com/node";
 
 export interface AuthioUserStore {
   isLoaded: boolean;

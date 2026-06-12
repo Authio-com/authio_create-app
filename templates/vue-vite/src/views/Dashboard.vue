@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useAuthio } from "@authio/vue";
+import { useAuthio } from "@authio.com/vue";
 
 const { user } = useAuthio();
 </script>

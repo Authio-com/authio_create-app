@@ -1,5 +1,5 @@
 import express from "express";
-import { Authio, AuthioError } from "@authio/node";
+import { Authio, AuthioError } from "@authio.com/node";
 
 const authio = new Authio({
   apiKey: process.env.AUTHIO_SECRET_KEY!,

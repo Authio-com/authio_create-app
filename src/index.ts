@@ -20,8 +20,8 @@ type Framework =
 
 const FRAMEWORKS: { id: Framework; label: string; hint: string }[] = [
   { id: "nextjs", label: "Next.js 15 (App Router)", hint: "Recommended" },
-  { id: "react-vite", label: "React + Vite (SPA)", hint: "Pure client-side, @authio/react" },
-  { id: "vue-vite", label: "Vue 3 + Vite (SPA)", hint: "Pure client-side, @authio/vue" },
+  { id: "react-vite", label: "React + Vite (SPA)", hint: "Pure client-side, @authio.com/react" },
+  { id: "vue-vite", label: "Vue 3 + Vite (SPA)", hint: "Pure client-side, @authio.com/vue" },
   { id: "sveltekit", label: "SvelteKit", hint: "Svelte 5 + Vite" },
   { id: "remix", label: "Remix", hint: "React + loaders/actions" },
   { id: "express", label: "Express", hint: "Classic Node API" },

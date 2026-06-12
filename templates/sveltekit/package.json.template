@@ -10,8 +10,8 @@
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json"
   },
   "dependencies": {
-    "@authio/svelte": "^0.1.0-alpha.0",
-    "@authio/node": "^0.1.0-alpha.0"
+    "@authio.com/svelte": "^0.1.0-alpha.0",
+    "@authio.com/node": "^0.1.0-alpha.0"
   },
   "devDependencies": {
     "@sveltejs/adapter-auto": "^3.3.1",

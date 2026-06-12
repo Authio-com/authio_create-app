@@ -9,7 +9,7 @@
     "start": "node dist/server.js"
   },
   "dependencies": {
-    "@authio/node": "^0.1.0-alpha.0",
+    "@authio.com/node": "^0.1.0-alpha.0",
     "express": "^4.21.0"
   },
   "devDependencies": {

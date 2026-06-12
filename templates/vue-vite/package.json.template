@@ -9,8 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@authio/vue": "^0.1.0",
-    "@authio/node": "^0.1.0",
+    "@authio.com/vue": "^0.1.0",
+    "@authio.com/node": "^0.1.0",
     "vue": "^3.4.0",
     "vue-router": "^4.4.0"
   },

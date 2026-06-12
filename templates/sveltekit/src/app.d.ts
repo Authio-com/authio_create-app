@@ -1,4 +1,4 @@
-import type { Session } from "@authio/node";
+import type { Session } from "@authio.com/node";
 
 declare global {
   namespace App {

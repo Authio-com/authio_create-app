@@ -24,12 +24,12 @@ Open http://localhost:5173/ — the app installs the Authio plugin globally, reg
 
 Auth-core enforces a per-project CORS allowlist. Make sure your SPA's origin is on the allowlist — see https://docs.authio.com/operations/setup-custom-domain.
 
-## When to use this vs `@authio/nextjs`
+## When to use this vs `@authio.com/nextjs`
 
-| Use this (`@authio/vue`) when... | Use `@authio/nextjs` when... |
+| Use this (`@authio.com/vue`) when... | Use `@authio.com/nextjs` when... |
 |---|---|
 | You have a pure Vite + Vue 3 SPA | Your stack is Next.js (React + RSC) |
-| You're on Nuxt 3 (use the experimental `@authio/vue/nuxt` module) | You want HttpOnly cookies + RSC `auth()` helper |
+| You're on Nuxt 3 (use the experimental `@authio.com/vue/nuxt` module) | You want HttpOnly cookies + RSC `auth()` helper |
 
 ## Next steps
 

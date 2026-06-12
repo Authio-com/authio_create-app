@@ -1,4 +1,4 @@
-import { createAuthioRefreshHandler } from "@authio/nextjs/server";
+import { createAuthioRefreshHandler } from "@authio.com/nextjs/server";
 
 // Silent BFF cookie auto-renewal. The middleware redirects here when
 // the access cookie has expired but the refresh cookie is still

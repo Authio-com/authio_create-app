@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { AuthioProvider } from "@authio/react";
+import { AuthioProvider } from "@authio.com/react";
 
 export const metadata: Metadata = {
   title: "%PROJECT_NAME%",

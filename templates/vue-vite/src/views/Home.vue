@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { SignedIn, SignedOut } from "@authio/vue";
+import { SignedIn, SignedOut } from "@authio.com/vue";
 import { RouterLink } from "vue-router";
 import SignInForm from "../components/SignInForm.vue";
 </script>

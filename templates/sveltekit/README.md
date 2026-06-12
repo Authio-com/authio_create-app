@@ -24,7 +24,7 @@ Then open:
 ## What this scaffold does
 
 - `src/hooks.server.ts` — reads the `authio_session` cookie, verifies it with
-  `@authio/svelte/server` (a thin wrapper over `@authio/node` JWKS verification),
+  `@authio.com/svelte/server` (a thin wrapper over `@authio.com/node` JWKS verification),
   and assigns `event.locals.session`. Redirects to `/sign-in` for protected
   paths when the session is missing.
 - `src/routes/sign-in/+page.svelte` — calls `auth.authio.com`'s

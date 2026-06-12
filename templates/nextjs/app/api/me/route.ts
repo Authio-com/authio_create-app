@@ -1,4 +1,4 @@
-import { auth } from "@authio/nextjs/server";
+import { auth } from "@authio.com/nextjs/server";
 
 export const dynamic = "force-dynamic";
 

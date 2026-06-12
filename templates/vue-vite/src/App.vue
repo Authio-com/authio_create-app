@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { SignedIn, useAuthio } from "@authio/vue";
+import { SignedIn, useAuthio } from "@authio.com/vue";
 import { RouterLink, RouterView } from "vue-router";
 
 const { user, signOut } = useAuthio();
