@@ -7,7 +7,7 @@ Vue 3 + Vite + Authio SPA starter. Pure client-side — no BFF required.
 ```bash
 pnpm install
 cp .env.example .env.local
-# replace VITE_AUTHIO_PROJECT_ID with a real proj_… from your dashboard
+# replace VITE_AUTHIO_PROJECT_ID with a real proj_… from your dashboard (environment ID)
 pnpm dev
 ```
 
@@ -19,6 +19,12 @@ Open http://localhost:5173/ — the app installs the Authio plugin globally, reg
 - `src/App.vue` uses `useAuthio()` for `{ user, status, signOut }` and shows a "signed in as ..." bar via `<SignedIn>`.
 - `src/components/SignInForm.vue` demonstrates `signInWithMagicLink({ email, redirectUri })` and `signInWithPasskey({ email })`.
 - `src/views/Dashboard.vue` is a protected route — the router guard redirects you away if you visit it while unauthenticated.
+
+## Custom auth domains
+
+For a branded auth host, configure your vanity hostname DNS (CNAME to
+`cname.authiodns.com`) in the dashboard, then point your sign-in flow at that
+URL. See https://docs.authio.com/guides/custom-domains.
 
 ## CORS
 

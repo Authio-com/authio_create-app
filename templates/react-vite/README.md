@@ -7,7 +7,7 @@ React 18 + Vite + Authio SPA starter. Pure client-side — no BFF required.
 ```bash
 pnpm install
 cp .env.example .env.local
-# replace VITE_AUTHIO_PROJECT_ID with a real proj_… from your dashboard
+# replace VITE_AUTHIO_PROJECT_ID with a real proj_… from your dashboard (environment ID)
 pnpm dev
 ```
 
@@ -23,6 +23,13 @@ Open http://localhost:5173/ — the app uses `<AuthioProvider>` from `@useauthio
   - `signInWithMagicLink({ email, redirectUri })` for a passwordless email sign-in,
   - `signInWithPasskey({ email })` for WebAuthn sign-in.
 - The SDK keeps the access token in memory by default. The HttpOnly refresh cookie is managed by auth-core directly.
+
+## Custom auth domains
+
+The default sign-in URL is the platform Lobby (`https://lobby.authio.com/`).
+For a branded auth host, set `VITE_AUTHIO_SIGN_IN_URL` in `.env.local` (see
+`.env.example`). DNS: CNAME your vanity hostname to `cname.authiodns.com` —
+see https://docs.authio.com/guides/custom-domains.
 
 ## CORS
 

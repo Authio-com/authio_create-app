@@ -13,6 +13,9 @@ createRoot(root).render(
       <AuthioProvider
         apiUrl={import.meta.env.VITE_AUTHIO_API_URL ?? "https://auth-api.authio.com"}
         projectId={import.meta.env.VITE_AUTHIO_PROJECT_ID ?? "proj_REPLACE_ME"}
+        signInUrl={
+          import.meta.env.VITE_AUTHIO_SIGN_IN_URL ?? "https://lobby.authio.com/"
+        }
       >
         <App />
       </AuthioProvider>
