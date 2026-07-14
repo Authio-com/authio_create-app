@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@useauthio/react": "^0.2.5",
+    "@useauthio/react": "^0.2.4",
     "@useauthio/node": "^0.2.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
