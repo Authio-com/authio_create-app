@@ -24,7 +24,7 @@ class AuthController extends Controller
     public function callback(Request $request)
     {
         $token = $request->query('access_token');
-        $redirect = $request->query('redirect', '/dashboard');
+        $redirect = $this->safeRedirectPath($request->query('redirect'));
         if (! $token) {
             return $this->signInError($request, 'missing_token');
         }
@@ -48,6 +48,21 @@ class AuthController extends Controller
     public function signOut()
     {
         return redirect('/')->withCookie(cookie()->forget('authio_session'));
+    }
+
+    private function safeRedirectPath(?string $value): string
+    {
+        if (
+            ! $value ||
+            ! str_starts_with($value, '/') ||
+            str_starts_with($value, '//') ||
+            str_contains($value, '\\') ||
+            preg_match('/[\x00-\x1F\x7F]/', $value)
+        ) {
+            return '/dashboard';
+        }
+
+        return $value;
     }
 
     /**

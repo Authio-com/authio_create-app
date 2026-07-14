@@ -9,8 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@useauthio/react": "^0.1.0",
-    "@useauthio/node": "^0.1.0",
+    "@useauthio/react": "^0.2.5",
+    "@useauthio/node": "^0.2.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.28.0"

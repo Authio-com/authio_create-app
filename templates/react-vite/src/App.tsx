@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { Link, Routes, Route, useNavigate } from "react-router-dom";
 import {
   useAuthio,
@@ -38,6 +38,7 @@ export function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/auth/callback" element={<AuthCallback />} />
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </div>
@@ -65,6 +66,7 @@ function SignIn() {
   );
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+  const { handleSignInResult } = useAuthio();
 
   async function handleMagicLink(e: FormEvent) {
     e.preventDefault();
@@ -75,7 +77,7 @@ function SignIn() {
         apiUrl,
         projectId,
         email,
-        redirectUri: window.location.origin + "/dashboard",
+        redirectUri: window.location.origin + "/auth/callback",
       });
       setStatus("sent");
     } catch (err) {
@@ -88,7 +90,8 @@ function SignIn() {
     setStatus("sending");
     setError(null);
     try {
-      await signInWithPasskey({ apiUrl, projectId, email });
+      const result = await signInWithPasskey({ apiUrl, projectId, email });
+      await handleSignInResult(result);
       navigate("/dashboard");
     } catch (err) {
       setStatus("error");
@@ -128,6 +131,38 @@ function SignIn() {
       {error && <p style={{ color: "crimson" }}>{error}</p>}
     </form>
   );
+}
+
+function AuthCallback() {
+  const { handleSignInResult } = useAuthio();
+  const navigate = useNavigate();
+  const started = useRef(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (started.current) return;
+    started.current = true;
+    const params = new URLSearchParams(window.location.search);
+    const accessToken = params.get("access_token");
+    if (!accessToken) {
+      setError("The sign-in callback did not include an access token.");
+      return;
+    }
+
+    void handleSignInResult({
+      accessToken,
+      refreshToken: params.get("refresh_token") ?? undefined,
+    })
+      .then(() => {
+        window.history.replaceState({}, "", "/auth/callback");
+        navigate("/dashboard", { replace: true });
+      })
+      .catch((err: unknown) => {
+        setError(err instanceof Error ? err.message : "Sign-in failed");
+      });
+  }, [handleSignInResult, navigate]);
+
+  return error ? <p style={{ color: "crimson" }}>{error}</p> : <p>Completing sign-in…</p>;
 }
 
 function Dashboard() {

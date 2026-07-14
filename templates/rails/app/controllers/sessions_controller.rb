@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
 
   def callback
     token = params[:access_token]
-    redirect_to = params[:redirect].presence || "/dashboard"
+    redirect_path = safe_redirect_path(params[:redirect])
 
     if token.blank?
       sign_in_error("missing_token") and return
@@ -27,7 +27,7 @@ class SessionsController < ApplicationController
       same_site: :lax,
       expires: 8.hours.from_now,
     }
-    redirect_to(redirect_to)
+    redirect_to(redirect_path)
   end
 
   def destroy
@@ -36,6 +36,15 @@ class SessionsController < ApplicationController
   end
 
   private
+
+  def safe_redirect_path(value)
+    candidate = value.presence
+    return "/dashboard" unless candidate&.start_with?("/")
+    return "/dashboard" if candidate.start_with?("//")
+    return "/dashboard" if candidate.include?("\\") || candidate.match?(/[[:cntrl:]]/)
+
+    candidate
+  end
 
   # Carry the error code across the bounce in a short-lived cookie
   # instead of ?error= — query-string error codes leak into browser

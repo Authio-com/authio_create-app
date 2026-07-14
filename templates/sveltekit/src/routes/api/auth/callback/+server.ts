@@ -9,9 +9,22 @@ const COOKIE_MAX_AGE = 60 * 60 * 8;
 // your sign-in page instead.
 const FLASH_COOKIE = "authio_signin_flash";
 
+function safeRedirectPath(value: string | null): string {
+  if (
+    !value ||
+    !value.startsWith("/") ||
+    value.startsWith("//") ||
+    value.includes("\\") ||
+    /[\u0000-\u001f\u007f]/.test(value)
+  ) {
+    return "/dashboard";
+  }
+  return value;
+}
+
 export const GET: RequestHandler = async ({ url, cookies }) => {
   const token = url.searchParams.get("access_token");
-  const redirectTo = url.searchParams.get("redirect") ?? "/dashboard";
+  const redirectTo = safeRedirectPath(url.searchParams.get("redirect"));
 
   function signInError(code: string): never {
     cookies.set(FLASH_COOKIE, code, {

@@ -24,8 +24,11 @@ export default function RootLayout({
         }}
       >
         <AuthioProvider
-          publishableKey={process.env.NEXT_PUBLIC_AUTHIO_PUBLISHABLE_KEY!}
-          apiUrl={process.env.NEXT_PUBLIC_AUTHIO_API_URL}
+          apiUrl={
+            process.env.NEXT_PUBLIC_AUTHIO_API_URL ??
+            "https://identity.authio.com"
+          }
+          projectId={process.env.AUTHIO_PROJECT_ID ?? "proj_REPLACE_ME"}
         >
           {children}
         </AuthioProvider>

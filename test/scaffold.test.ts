@@ -55,6 +55,16 @@ describe("create-authio-app", () => {
       "utf-8",
     );
     expect(callbackRoute).toContain("createAuthioCallbackHandler");
+    expect(callbackRoute).toContain("verifyAccessToken: true");
+
+    const signInRoute = readFileSync(
+      join(appDir, "app", "api", "auth", "sign-in", "route.ts"),
+      "utf-8",
+    );
+    expect(signInRoute).toContain("createAuthioSignInHandler");
+    expect(
+      readFileSync(join(appDir, "app", "sign-in", "page.tsx"), "utf-8"),
+    ).toContain("/api/auth/sign-in?next=/dashboard");
 
     const refreshRoute = readFileSync(
       join(appDir, "app", "api", "auth", "refresh", "route.ts"),
@@ -85,6 +95,27 @@ describe("create-authio-app", () => {
     expect(server).toContain("import express");
     expect(server).toContain("authio.sessions.verify");
     expect(server).toContain("demo-express");
+  });
+
+  it("scaffolds a React Vite app that completes sign-in before navigation", async () => {
+    await run([
+      "demo-react",
+      "--framework",
+      "react-vite",
+      "--publishable-key",
+      "pk_test_react",
+      "--project-id",
+      "proj_react",
+      "--yes",
+    ]);
+    const app = readFileSync(
+      join(workdir, "demo-react", "src", "App.tsx"),
+      "utf-8",
+    );
+    expect(app).toContain('path="/auth/callback"');
+    expect(app).toContain("handleSignInResult(result)");
+    expect(app).toContain("params.get(\"access_token\")");
+    expect(app).toContain("navigate(\"/dashboard\", { replace: true })");
   });
 
   it("scaffolds a Hono app", async () => {
@@ -134,6 +165,8 @@ describe("create-authio-app", () => {
     );
     expect(callback).toContain("access_token");
     expect(callback).toContain("cookies.set");
+    expect(callback).toContain("safeRedirectPath");
+    expect(callback).toContain('value.startsWith("//")');
 
     const dashboard = readFileSync(
       join(dir, "src", "routes", "dashboard", "+page.server.ts"),
@@ -182,6 +215,8 @@ describe("create-authio-app", () => {
       "utf-8",
     );
     expect(callback).toContain("access_token");
+    expect(callback).toContain("safeRedirectPath");
+    expect(callback).toContain('value.startsWith("//")');
 
     expect(statSync(join(dir, ".gitignore")).isFile()).toBe(true);
   });
@@ -226,6 +261,13 @@ describe("create-authio-app", () => {
       "utf-8",
     );
     expect(signIn).toContain("magic-link/start");
+
+    const callback = readFileSync(
+      join(dir, "app", "Http", "Controllers", "AuthController.php"),
+      "utf-8",
+    );
+    expect(callback).toContain("safeRedirectPath");
+    expect(callback).toContain("str_starts_with($value, '//')");
 
     expect(statSync(join(dir, ".gitignore")).isFile()).toBe(true);
   });
@@ -274,6 +316,8 @@ describe("create-authio-app", () => {
     );
     expect(sessions).toContain("access_token");
     expect(sessions).toContain("cookies[:authio_session]");
+    expect(sessions).toContain("safe_redirect_path");
+    expect(sessions).toContain('candidate.start_with?("//")');
 
     expect(statSync(join(dir, ".gitignore")).isFile()).toBe(true);
   });

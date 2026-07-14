@@ -16,10 +16,23 @@ function signInErrorRedirect(code: string) {
   });
 }
 
+function safeRedirectPath(value: string | null): string {
+  if (
+    !value ||
+    !value.startsWith("/") ||
+    value.startsWith("//") ||
+    value.includes("\\") ||
+    /[\u0000-\u001f\u007f]/.test(value)
+  ) {
+    return "/dashboard";
+  }
+  return value;
+}
+
 export async function loader({ request }: LoaderFunctionArgs) {
   const url = new URL(request.url);
   const token = url.searchParams.get("access_token");
-  const redirectTo = url.searchParams.get("redirect") ?? "/dashboard";
+  const redirectTo = safeRedirectPath(url.searchParams.get("redirect"));
   if (!token) {
     return signInErrorRedirect("missing_token");
   }

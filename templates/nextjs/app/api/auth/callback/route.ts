@@ -5,6 +5,7 @@ import { createAuthioCallbackHandler } from "@useauthio/nextjs/server";
 export const GET = createAuthioCallbackHandler({
   apiUrl: process.env.NEXT_PUBLIC_AUTHIO_API_URL,
   signedInRedirect: "/dashboard",
+  verifyAccessToken: true,
 });
 
 export const dynamic = "force-dynamic";
