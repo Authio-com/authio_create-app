@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { AuthioProvider } from "@useauthio/react";
+import { AuthioClientProvider } from "./AuthioClientProvider";
 
 export const metadata: Metadata = {
   title: "%PROJECT_NAME%",
@@ -23,7 +23,7 @@ export default function RootLayout({
           color: "#0a0a0a",
         }}
       >
-        <AuthioProvider
+        <AuthioClientProvider
           apiUrl={
             process.env.NEXT_PUBLIC_AUTHIO_API_URL ??
             "https://identity.authio.com"
@@ -31,7 +31,7 @@ export default function RootLayout({
           projectId={process.env.AUTHIO_PROJECT_ID ?? "proj_REPLACE_ME"}
         >
           {children}
-        </AuthioProvider>
+        </AuthioClientProvider>
       </body>
     </html>
   );

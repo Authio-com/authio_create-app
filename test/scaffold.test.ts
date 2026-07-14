@@ -41,8 +41,14 @@ describe("create-authio-app", () => {
     expect(pkg.dependencies.next).toBeDefined();
 
     const layout = readFileSync(join(appDir, "app", "layout.tsx"), "utf-8");
-    expect(layout).toContain("AuthioProvider");
+    expect(layout).toContain("AuthioClientProvider");
     expect(layout).toContain("demo-app");
+    const clientProvider = readFileSync(
+      join(appDir, "app", "AuthioClientProvider.tsx"),
+      "utf-8",
+    );
+    expect(clientProvider).toContain('"use client"');
+    expect(clientProvider).toContain("AuthioProvider");
 
     const middleware = readFileSync(join(appDir, "middleware.ts"), "utf-8");
     expect(middleware).toContain("createAuthioMiddleware");
@@ -56,6 +62,8 @@ describe("create-authio-app", () => {
     );
     expect(callbackRoute).toContain("createAuthioCallbackHandler");
     expect(callbackRoute).toContain("verifyAccessToken: true");
+    expect(callbackRoute).toContain("!callbackState || !cookieState");
+    expect(callbackRoute).toContain("callbackState !== cookieState");
 
     const signInRoute = readFileSync(
       join(appDir, "app", "api", "auth", "sign-in", "route.ts"),

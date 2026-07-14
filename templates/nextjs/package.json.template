@@ -8,7 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
-    "@useauthio/nextjs": "^0.5.0",
+    "@useauthio/nextjs": "^0.4.4",
     "@useauthio/react": "^0.2.4",
     "@useauthio/node": "^0.2.0",
     "next": "^15.0.3",
