@@ -217,7 +217,7 @@ export async function run(argv: string[]): Promise<void> {
       `    ${kleur.yellow("→")} Replace ${kleur.bold("AUTHIO_PUBLISHABLE_KEY")} in .env / .env.local`,
     );
     console.log(
-      `    ${kleur.yellow("→")} Mint one via the dashboard at ${kleur.cyan("https://dashboard.authio.com/keys/new")}`,
+      `    ${kleur.yellow("→")} Mint a publishable key in the dashboard at ${kleur.cyan("https://dashboard.authio.com/keys")}`,
     );
   }
   console.log();
